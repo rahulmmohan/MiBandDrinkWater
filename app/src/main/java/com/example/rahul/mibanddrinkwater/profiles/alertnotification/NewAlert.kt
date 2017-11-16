@@ -31,7 +31,7 @@ class NewAlert {
     val category: AlertCategory
     val numAlerts: Int
     val message: String
-    var customIcon: Byte = -1
+    var customIcon: Byte = 10
 
     constructor(category: AlertCategory, /*uint8*/ numAlerts: Int, /*utf8s*/ message: String) {
         this.category = category

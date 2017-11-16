@@ -16,10 +16,10 @@ public class Mi2NotificationStrategy {
 
     public Mi2NotificationStrategy(BLEMiBand2Helper helper) {
         this.helper = helper;
-        alertLevelCharacteristic = helper.getCharacteristic(GattService.UUID_SERVICE_ALERT_NOTIFICATION,GattCharacteristic.UUID_CHARACTERISTIC_ALERT_LEVEL);
+        alertLevelCharacteristic = helper.getCharacteristic(GattService.UUID_SERVICE_ALERT,GattCharacteristic.UUID_CHARACTERISTIC_ALERT_LEVEL);
     }
 
-    protected void sendCustomNotification(VibrationProfile vibrationProfile) {
+    public void sendCustomNotification(VibrationProfile vibrationProfile) {
         for (short i = 0; i < vibrationProfile.getRepeat(); i++) {
             int[] onOffSequence = vibrationProfile.getOnOffSequence();
             for (int j = 0; j < onOffSequence.length; j++) {

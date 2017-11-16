@@ -1,8 +1,11 @@
 package com.example.rahul.mibanddrinkwater;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -11,27 +14,29 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.rahul.mibanddrinkwater.alarmmanager.BackgroundService;
+import com.example.rahul.mibanddrinkwater.alarmmanager.DrinkReminderReceiver;
 import com.example.rahul.mibanddrinkwater.btle.GattCharacteristic;
 import com.example.rahul.mibanddrinkwater.btle.GattService;
+import com.example.rahul.mibanddrinkwater.profiles.Mi2NotificationStrategy;
 import com.example.rahul.mibanddrinkwater.profiles.Mi2TextNotificationStrategy;
+import com.example.rahul.mibanddrinkwater.profiles.alertnotification.VibrationProfile;
 
 import java.util.UUID;
 
 
 public class MainActivityJava extends AppCompatActivity implements BLEMiBand2Helper.BLEAction {
-    public static final String LOG_TAG = "Yoni";
 
     Handler handler = new Handler(Looper.getMainLooper());
     BLEMiBand2Helper helper = null;
 
-    TextView txtPath;
     Mi2TextNotificationStrategy mi2TextNotificationStrategy;
-
+    Mi2NotificationStrategy mi2NotificationStrategy;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+/*
         helper = new BLEMiBand2Helper(MainActivityJava.this, handler);
         helper.addListener(this);
 
@@ -39,23 +44,36 @@ public class MainActivityJava extends AppCompatActivity implements BLEMiBand2Hel
         helper.findBluetoothDevice(myBluetoothAdapter, "MI");
         helper.ConnectToGatt();
 
-        mi2TextNotificationStrategy = new Mi2TextNotificationStrategy(helper);
+
 
         try {
             Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        mi2TextNotificationStrategy = new Mi2TextNotificationStrategy(helper);
+        mi2NotificationStrategy = new Mi2NotificationStrategy(helper);
         getTouchNotifications();
+        startAlert();*/
+        startService(new Intent(this, BackgroundService.class));
     }
 
+    public void startAlert() {
+        int timeInSec = 2;
 
-    @Override
+        Intent intent = new Intent(this, DrinkReminderReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                this.getApplicationContext(), 234, intent, 0);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager.cancel(pendingIntent);
+        //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (timeInSec * 1000),10000, pendingIntent);
+    }
+/*    @Override
     protected void onDestroy() {
         if (helper != null)
             helper.DisconnectGatt();
         super.onDestroy();
-    }
+    }*/
 
     // Like network card, connect to all devices in Bluetooth (like PC in Netowrk)
     final BluetoothAdapter myBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -66,7 +84,9 @@ public class MainActivityJava extends AppCompatActivity implements BLEMiBand2Hel
     }
 
     public void sendMessage(View view) {
-        mi2TextNotificationStrategy.sendCustomNotification();
+        mi2TextNotificationStrategy.startNotify();
+    //mi2TextNotificationStrategy.sendCustomNotification();
+      // mi2NotificationStrategy.sendCustomNotification(VibrationProfile.Companion.getProfile(5, (short) 2));
     }
 
     public void getTouchNotifications() {

@@ -42,8 +42,8 @@ public class BLEMiBand2Helper {
 
     /* =========  Handling Initializing  ============== */
 
-    void findBluetoothDevice(BluetoothAdapter myBluetoothAdapter,
-                                        String filter) {
+    public void findBluetoothDevice(BluetoothAdapter myBluetoothAdapter,
+                                    String filter) {
         Log.d(TAG, "(*) Initialising Bluetooth connection for device: " + filter);
 
         if(myBluetoothAdapter.isEnabled()) {
@@ -157,7 +157,7 @@ public class BLEMiBand2Helper {
 
     /* =========  Handling Events  ============== */
 
-    private ArrayList<BLEAction> listeners = new ArrayList<BLEAction>();
+    private static ArrayList<BLEAction> listeners = new ArrayList<BLEAction>();
 
     public void addListener(BLEAction toAdd) {
         listeners.add(toAdd);
@@ -246,15 +246,16 @@ public class BLEMiBand2Helper {
             }
         }
     }
-    public void writeData(BluetoothGattCharacteristic Characteristics, byte[] data) {
+    public boolean writeData(BluetoothGattCharacteristic Characteristics, byte[] data) {
         if (!isConnectedToGatt || myGatBand == null) {
             Log.d(TAG, "Cant read from BLE, not initialized.");
-            return;
+            return false;
         }
         Log.d(TAG, "* Writing trigger");
         Characteristics.setValue(data /*Consts.BYTE_NEW_HEART_RATE_SCAN*/);
         boolean status =  myGatBand.writeCharacteristic(Characteristics);
         Log.d(TAG, "* Writting trigger status :" + status);
+        return status;
     }
 
     public void getNotifications(UUID service, UUID Characteristics) {

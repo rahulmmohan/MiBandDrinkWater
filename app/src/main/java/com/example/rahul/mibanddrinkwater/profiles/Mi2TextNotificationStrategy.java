@@ -25,8 +25,11 @@ public class Mi2TextNotificationStrategy {
         newAlertCharacteristic = helper.getCharacteristic(GattService.UUID_SERVICE_ALERT_NOTIFICATION, GattCharacteristic.UUID_CHARACTERISTIC_NEW_ALERT);
     }
 
-    protected void startNotify() {
-        helper.writeData(newAlertCharacteristic, getNotifyMessage());
+    public void startNotify() {
+        if(helper.writeData(newAlertCharacteristic, getNotifyMessage())) {
+            helper.wait(4500);
+            sendCustomNotification();
+        }
     }
 
     protected byte[] getNotifyMessage() {
@@ -39,12 +42,12 @@ public class Mi2TextNotificationStrategy {
             }
             return new byte[]{BLETypeConversions.fromUint8(AlertCategory.CustomHuami.getId()), BLETypeConversions.fromUint8(numAlerts), customIconId};
         }*/
-        return new byte[] { BLETypeConversions.fromUint8(AlertCategory.SMS.getId()), BLETypeConversions.fromUint8(numAlerts)};
+        return new byte[] { BLETypeConversions.fromUint8(-6), BLETypeConversions.fromUint8(numAlerts),21};
     }
 
     public void sendCustomNotification() {
         AlertCategory category = AlertCategory.SMS;
-        NewAlert alert = new NewAlert(category, 1, "test message");
+        NewAlert alert = new NewAlert(category, 2, "test message");
         newAlert(alert, OverflowStrategy.MAKE_MULTIPLE);
     }
     public void newAlert( NewAlert alert, OverflowStrategy strategy) {
