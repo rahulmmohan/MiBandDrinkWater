@@ -36,7 +36,7 @@ public class MainActivityJava extends AppCompatActivity implements BLEMiBand2Hel
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-/*
+
         helper = new BLEMiBand2Helper(MainActivityJava.this, handler);
         helper.addListener(this);
 
@@ -54,8 +54,15 @@ public class MainActivityJava extends AppCompatActivity implements BLEMiBand2Hel
         mi2TextNotificationStrategy = new Mi2TextNotificationStrategy(helper);
         mi2NotificationStrategy = new Mi2NotificationStrategy(helper);
         getTouchNotifications();
-        startAlert();*/
-        startService(new Intent(this, BackgroundService.class));
+        findViewById(R.id.btnSetupHearRate).setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                mi2TextNotificationStrategy.sendCustomNotification("Love u Kithuuu");
+                return true;
+            }
+        });
+//        startAlert();
+//        startService(new Intent(this, BackgroundService.class));
     }
 
     public void startAlert() {

@@ -28,7 +28,7 @@ public class Mi2TextNotificationStrategy {
     public void startNotify() {
         if(helper.writeData(newAlertCharacteristic, getNotifyMessage())) {
             helper.wait(4500);
-            sendCustomNotification();
+            sendCustomNotification("Take a Drink");
         }
     }
 
@@ -45,9 +45,9 @@ public class Mi2TextNotificationStrategy {
         return new byte[] { BLETypeConversions.fromUint8(-6), BLETypeConversions.fromUint8(numAlerts),21};
     }
 
-    public void sendCustomNotification() {
+    public void sendCustomNotification(String s) {
         AlertCategory category = AlertCategory.SMS;
-        NewAlert alert = new NewAlert(category, 2, "test message");
+        NewAlert alert = new NewAlert(category, 2, s);
         newAlert(alert, OverflowStrategy.MAKE_MULTIPLE);
     }
     public void newAlert( NewAlert alert, OverflowStrategy strategy) {
