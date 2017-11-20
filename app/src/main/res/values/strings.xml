@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">MiBandDrinkWater</string>
     <string name="title_activity_home">HomeActivity</string>
+    <string name="title_activity_history">HistoryActivity</string>
+    <string name="tab_text_1">Day</string>
+    <string name="tab_text_2">Week</string>
+    <string name="tab_text_3">Month</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 </resources>

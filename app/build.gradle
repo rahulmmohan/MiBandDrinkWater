@@ -32,7 +32,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
-    compile 'com.github.john990:WaveView:v0.9'
-    compile 'me.itangqi.waveloadingview:library:0.3.5'
-
+    implementation 'me.itangqi.waveloadingview:library:0.3.5'
+    implementation 'im.dacer:AndroidCharts:1.0.4'
 }
