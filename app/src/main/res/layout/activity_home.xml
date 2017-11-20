@@ -31,9 +31,9 @@
         android:layout_gravity="bottom|left"
         android:layout_margin="@dimen/fab_margin2"
         android:scaleType="center"
-        android:src="@drawable/ic_schedule_white_36dp"
+        android:src="@drawable/ic_schedule"
         app:backgroundTint="@color/textColor"
-        app:useCompatPadding="false" />
+        />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab3"
@@ -43,5 +43,5 @@
         android:layout_margin="@dimen/fab_margin2"
         android:scaleType="center"
         app:backgroundTint="@color/textColor"
-        app:srcCompat="@drawable/ic_history_white_36dp" />
+        app:srcCompat="@drawable/ic_equalizer_white_36dp" />
 </android.support.design.widget.CoordinatorLayout>
