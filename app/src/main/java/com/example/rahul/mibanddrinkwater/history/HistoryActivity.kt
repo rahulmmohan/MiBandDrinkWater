@@ -1,50 +1,43 @@
 package com.example.rahul.mibanddrinkwater.history
 
+import android.graphics.Rect
 import android.os.Bundle
 import android.support.design.widget.TabLayout
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
+import com.db.chart.animation.Animation
+import com.db.chart.model.BarSet
+import com.db.chart.renderer.AxisRenderer
+import com.db.chart.tooltip.Tooltip
+import com.db.chart.util.Tools
+import com.db.chart.view.StackBarChartView
 import com.example.rahul.mibanddrinkwater.R
 import kotlinx.android.synthetic.main.activity_history.*
-import android.R.attr.action
-import android.view.animation.AccelerateDecelerateInterpolator
-import android.graphics.Color.parseColor
-import com.db.chart.model.BarSet
-import android.animation.PropertyValuesHolder
-import android.graphics.Color
-import android.os.Build
-import android.view.View
-import com.db.chart.animation.Animation
-import com.db.chart.tooltip.Tooltip
-import com.db.chart.view.BarChartView
-import android.R.attr.action
-import com.db.chart.renderer.YRenderer
-import com.db.chart.renderer.XRenderer
-import com.db.chart.util.Tools
-import android.graphics.DashPathEffect
-import android.graphics.Paint
-import android.support.v4.content.ContextCompat
-import com.db.chart.renderer.AxisRenderer
-import com.db.chart.view.StackBarChartView
 
 
 class HistoryActivity : AppCompatActivity() {
-    private val mLabels = arrayOf("JAN", "FEB", "MAR", "ABR", "MAI", "JUN", "JUL", "AGO", "SET", "OUT", "NOV", "DEZ")
-    private val mLabels2 = arrayOf("SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT")
+    private val mLabels = arrayOf(
+            arrayOf("SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"),
+            arrayOf("JAN", "FEB", "MAR", "ABR", "MAI", "JUN", "JUL", "AGO", "SET", "OUT", "NOV", "DEZ")
+    )
+
 
     private val mValuesOne = arrayOf(
-            floatArrayOf(30f, 40f, 25f, 25f, 40f, 25f, 25f, 30f, 30f, 25f, 40f, 25f),
-            floatArrayOf(30f, 30f, 25f, 40f, 25f, 30f, 40f, 30f, 30f, 25f, 25f, 25f),
             floatArrayOf(30f, 40f, 25f, 25f, 40f, 25f, 25f),
-            floatArrayOf(30f, 30f, 25f, 40f, 25f, 30f, 40f))
+            floatArrayOf(30f, 30f, 25f, 40f, 25f, 30f, 40f),
+            floatArrayOf(30f, 40f, 25f, 25f, 40f, 25f, 25f, 30f, 30f, 25f, 40f, 25f),
+            floatArrayOf(30f, 30f, 25f, 40f, 25f, 30f, 40f, 30f, 30f, 25f, 25f, 25f)
+    )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_history)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        randomSet(chart, 0)
         tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
-              randomSet(chart)
+                randomSet(chart, tab.position)
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab) {
@@ -58,24 +51,42 @@ class HistoryActivity : AppCompatActivity() {
 
     }
 
-    private fun randomSet(barView: StackBarChartView) {
-
-        var stackBarSet = BarSet(mLabels2, mValuesOne[2])
-        stackBarSet.color = ContextCompat.getColor(this,R.color.textColor)
+    private fun randomSet(barView: StackBarChartView, position: Int) {
+        barView.reset()
+        barView.removeAllViews()
+        var stackBarSet = BarSet(mLabels[position], mValuesOne[position*2])
+        stackBarSet.color = ContextCompat.getColor(this, R.color.ocean_blue)
         barView.addData(stackBarSet)
 
-        stackBarSet = BarSet(mLabels2, mValuesOne[3])
-        stackBarSet.color = ContextCompat.getColor(this,R.color.background_white)
+        stackBarSet = BarSet(mLabels[position], mValuesOne[position*2+1])
+        stackBarSet.color = ContextCompat.getColor(this, R.color.background_white)
         barView.addData(stackBarSet)
-         /*
-        stackBarSet = BarSet(mLabels, mValuesOne[2])
-        stackBarSet.color = parseColor("#ff7a57")
-        barView.addData(stackBarSet)*/
 
-        val order = intArrayOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11)
+        barView.setOnEntryClickListener({ i: Int, i1: Int, rect: Rect ->
+            tip.prepare(barView.getEntriesArea(0)[i1], 1f)
+            //tip.postInvalidate()
+        })
         barView.setXLabels(AxisRenderer.LabelPosition.OUTSIDE)
                 .setYLabels(AxisRenderer.LabelPosition.OUTSIDE)
-                .show(Animation().inSequence(.5f, order))
+                .show(Animation().inSequence(.5f).withEndAction({
+
+                    showTooltip(barView)
+                }))
+
+    }
+
+    private lateinit var tip: Tooltip
+
+    private fun showTooltip(barView: StackBarChartView) {
+
+        // Tooltip
+        tip = Tooltip(this, R.layout.tooltip_1)
+        tip.setVerticalAlignment(Tooltip.Alignment.BOTTOM_TOP)
+        tip.setDimensions(Tools.fromDpToPx(20f).toInt(), Tools.fromDpToPx(20f).toInt())
+        tip.setMargins(0, 0, 0, Tools.fromDpToPx(10f).toInt())
+        tip.prepare(barView.getEntriesArea(0).get(0), 1f)
+
+        barView.showTooltip(tip, true)
     }
 
 }
