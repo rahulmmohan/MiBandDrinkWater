@@ -32,5 +32,8 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
     implementation 'me.itangqi.waveloadingview:library:0.3.5'
-    implementation 'im.dacer:AndroidCharts:1.0.4'
+    implementation 'com.diogobernardino:williamchart:2.5.0'
+
+    implementation "android.arch.persistence.room:runtime:1.0.0"
+    annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
 }
