@@ -10,7 +10,7 @@ import com.example.rahul.mibanddrinkwater.history.HistoryActivity
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.content_home.*
 
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity() ,HomeContract.View{
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

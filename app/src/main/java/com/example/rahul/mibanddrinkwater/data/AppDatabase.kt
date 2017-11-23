@@ -1,7 +1,6 @@
 package com.example.rahul.mibanddrinkwater.data
 
 import android.arch.persistence.room.Database
-import android.arch.persistence.room.Entity
 import android.arch.persistence.room.RoomDatabase
 import android.arch.persistence.room.Room
 import android.content.Context
