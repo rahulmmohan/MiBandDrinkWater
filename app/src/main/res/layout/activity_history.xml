@@ -9,7 +9,7 @@
     android:background="@android:color/white"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
-    tools:context="com.example.rahul.mibanddrinkwater.history.HistoryActivity">
+    tools:context="com.example.rahul.mibanddrinkwater.history.ScheduleActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"

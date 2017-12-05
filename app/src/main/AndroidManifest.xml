@@ -30,9 +30,13 @@
             android:resource="@array/preloaded_fonts" />
 
         <activity
+            android:name=".schedule.ScheduleActivity"
+            android:label="@string/title_activity_history"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
             android:name=".history.HistoryActivity"
             android:label="@string/title_activity_history"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

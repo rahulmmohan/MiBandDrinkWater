@@ -20,5 +20,7 @@
     <style name="AppTheme.NoActionBar.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.NoActionBar.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
+    <style name="SelectableButton">
+        <item name="android:background">?attr/selectableItemBackground</item>
+    </style>
 </resources>

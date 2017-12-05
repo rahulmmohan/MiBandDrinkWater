@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:paddingTop="@dimen/appbar_padding_top"
+        android:theme="@style/AppTheme.NoActionBar.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_weight="1"
+            android:background="@android:color/white"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:navigationIcon="@drawable/ic_keyboard_backspace_black_24dp"
+            app:popupTheme="@style/AppTheme.NoActionBar.PopupOverlay"
+            app:title="Schedule"
+            app:titleTextColor="@color/textColor">
+
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:clickable="true"
+            android:foreground="?attr/selectableItemBackground"
+            app:cardCornerRadius="0dp"
+            app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingEnd="16dp"
+                    android:paddingStart="16dp"
+                    android:paddingTop="8dp">
+
+                    <include layout="@layout/alarm_time_layout" />
+
+                    <LinearLayout
+                        android:id="@+id/days"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                            <ToggleButton
+                            android:id="@+id/day0"
+                            style="@style/AlarmDayToggle" />
+
+                        <ToggleButton
+                            android:id="@+id/day1"
+                            style="@style/AlarmDayToggle" />
+
+                        <ToggleButton
+                            android:id="@+id/day2"
+                            style="@style/AlarmDayToggle" />
+
+                        <ToggleButton
+                            android:id="@+id/day3"
+                            style="@style/AlarmDayToggle" />
+
+                        <ToggleButton
+                            android:id="@+id/day4"
+                            style="@style/AlarmDayToggle" />
+
+                        <ToggleButton
+                            android:id="@+id/day5"
+                            style="@style/AlarmDayToggle" />
+
+                        <ToggleButton
+                            android:id="@+id/day6"
+                            style="@style/AlarmDayToggle" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:gravity="center_vertical"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        >
+                        <TextView
+                            android:id="@+id/time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/TextAppearance.AppCompat"
+                            android:text="Repeat on"
+                            android:textSize="26sp"
+                            android:fontFamily="sans-serif-light"/>
+
+                        <Space
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"/>
+
+                        <android.support.v7.widget.AppCompatEditText
+                            android:id="@+id/on_off_switch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="30"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:textSize="26sp"
+                            android:layout_gravity="center_vertical"/>
+                        <TextView
+                            android:layout_marginLeft="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/TextAppearance.AppCompat"
+                            android:text="Minutes"
+                            android:textSize="14sp"
+                            android:fontFamily="sans-serif-light"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+</LinearLayout>

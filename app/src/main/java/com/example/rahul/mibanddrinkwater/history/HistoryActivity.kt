@@ -15,7 +15,7 @@ import com.example.rahul.mibanddrinkwater.R
 import kotlinx.android.synthetic.main.activity_history.*
 
 
-class HistoryActivity : AppCompatActivity(),HistoryContract.View {
+class HistoryActivity : AppCompatActivity(), HistoryContract.View {
     private val mLabels = arrayOf(
             arrayOf("SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"),
             arrayOf("JAN", "FEB", "MAR", "ABR", "MAI", "JUN", "JUL", "AGO", "SET", "OUT", "NOV", "DEZ")

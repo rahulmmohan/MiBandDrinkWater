@@ -16,7 +16,7 @@
         android:layout_gravity="top|right"/>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/addWater"
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:layout_gravity="bottom|center"
@@ -25,7 +25,7 @@
         app:srcCompat="@drawable/ic_add_white_48dp" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab1"
+        android:id="@+id/schedule"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_gravity="bottom|left"
@@ -36,7 +36,7 @@
         />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab3"
+        android:id="@+id/history"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_gravity="bottom|right"

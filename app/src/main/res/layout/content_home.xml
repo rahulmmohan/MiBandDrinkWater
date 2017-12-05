@@ -9,7 +9,7 @@
     tools:showIn="@layout/activity_home">
 
     <me.itangqi.waveloadingview.WaveLoadingView
-        android:id="@+id/waveLoadingView"
+        android:id="@+id/drinkView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="visible"
