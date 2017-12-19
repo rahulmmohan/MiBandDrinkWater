@@ -73,7 +73,7 @@ public class MainActivityJava extends AppCompatActivity implements BLEMiBand2Hel
                 this.getApplicationContext(), 234, intent, 0);
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         alarmManager.cancel(pendingIntent);
-        //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (timeInSec * 1000),10000, pendingIntent);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (timeInSec * 1000),10000, pendingIntent);
     }
 /*    @Override
     protected void onDestroy() {
