@@ -23,7 +23,7 @@ class DrinkReminderReceiver: BroadcastReceiver() {
             when (state) {
                 BluetoothAdapter.STATE_ON -> {
                      val myBluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
-                    val bleMiBand2Helper = BLEMiBand2Helper(context, Handler(Looper.getMainLooper()))
+                    val bleMiBand2Helper =BLEMiBand2Helper.getInstance(context)
                     bleMiBand2Helper.findBluetoothDevice(myBluetoothAdapter,"MI")
                     bleMiBand2Helper.ConnectToGatt()
                 }

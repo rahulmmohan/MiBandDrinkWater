@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import com.example.rahul.mibanddrinkwater.R
 import com.example.rahul.mibanddrinkwater.history.HistoryActivity
 import com.example.rahul.mibanddrinkwater.schedule.ScheduleActivity
+import com.example.rahul.mibanddrinkwater.schedule.SettingsActivity
 
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.content_home.*
@@ -52,7 +53,7 @@ class HomeActivity : AppCompatActivity() ,HomeContract.View{
     }
 
     override fun openSchedule() {
-        startActivity(Intent(this, ScheduleActivity::class.java))
+        startActivity(Intent(this, SettingsActivity::class.java))
     }
 
     override fun openSettings() {

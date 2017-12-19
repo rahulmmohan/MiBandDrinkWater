@@ -37,7 +37,7 @@ public class MainActivityJava extends AppCompatActivity implements BLEMiBand2Hel
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        helper = new BLEMiBand2Helper(MainActivityJava.this, handler);
+        helper = BLEMiBand2Helper.getInstance(this);
         helper.addListener(this);
 
         // Setup Bluetooth:

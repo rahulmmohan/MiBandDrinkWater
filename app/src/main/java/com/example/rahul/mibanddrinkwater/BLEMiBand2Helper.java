@@ -9,6 +9,7 @@ import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothProfile;
 import android.content.Context;
+import android.os.Handler;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import java.util.UUID;
  * Created by YoniWas on 27/02/2017.
  */
 public class BLEMiBand2Helper {
+    private static BLEMiBand2Helper helper;
     public static final String TAG = "YONI-MI-2";
 
     private Context myContext = null;
@@ -28,12 +30,16 @@ public class BLEMiBand2Helper {
     private boolean isConnectedToGatt = false; // the gatt connection
     private BluetoothGatt myGatBand = null;
 
+    public static BLEMiBand2Helper getInstance(Context context){
+       if(helper==null){
+           helper =new BLEMiBand2Helper(context);
+       }
+       return helper;
+    }
 
-    private BLEMiBand2Helper() {}
-
-    public BLEMiBand2Helper(Context context, android.os.Handler handler) {
+    private BLEMiBand2Helper(Context context) {
         myContext = context;
-        myHandler = handler;
+        myHandler = new Handler();
     }
 
     public  boolean isConnected() {
@@ -157,7 +163,7 @@ public class BLEMiBand2Helper {
 
     /* =========  Handling Events  ============== */
 
-    private static ArrayList<BLEAction> listeners = new ArrayList<BLEAction>();
+    private ArrayList<BLEAction> listeners = new ArrayList<BLEAction>();
 
     public void addListener(BLEAction toAdd) {
         listeners.add(toAdd);

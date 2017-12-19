@@ -44,7 +44,7 @@ public class BackgroundService extends Service implements BLEMiBand2Helper.BLEAc
         mReceiver = new DrinkReminderReceiver();
         IntentFilter filter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
         registerReceiver(mReceiver, filter);
-        helper = new BLEMiBand2Helper(this, handler);
+        helper =BLEMiBand2Helper.getInstance(this);
         helper.addListener(this);
         // Setup Bluetooth:
         helper.findBluetoothDevice(myBluetoothAdapter, "MI");

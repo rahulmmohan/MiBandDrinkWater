@@ -22,7 +22,7 @@ class SchedulePresenter(val view: ScheduleActivity) : ScheduleContract.Presenter
     }
 
     override fun onGetOffWorkAtSelect() {
-        view.showStartWorkAtTimePicker(6,30)
+        view.showGetOffWorkAtTimePicker(6,30)
     }
 
     override fun onRepeatOnSelect() {

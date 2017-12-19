@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?android:attr/actionBarSize"
+        android:background="@android:color/white"
+        app:layout_scrollFlags="scroll|enterAlways"
+        app:navigationIcon="@drawable/ic_keyboard_backspace_black_24dp"
+        app:popupTheme="@style/AppTheme.NoActionBar.PopupOverlay"
+        app:title="Schedule"
+        app:titleTextColor="@color/textColor"/>
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:padding="16dp"
+        android:id="@+id/days"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ToggleButton
+            android:id="@+id/day0"
+            style="@style/AlarmDayToggle" />
+
+        <ToggleButton
+            android:id="@+id/day1"
+            style="@style/AlarmDayToggle" />
+
+        <ToggleButton
+            android:id="@+id/day2"
+            style="@style/AlarmDayToggle" />
+
+        <ToggleButton
+            android:id="@+id/day3"
+            style="@style/AlarmDayToggle" />
+
+        <ToggleButton
+            android:id="@+id/day4"
+            style="@style/AlarmDayToggle" />
+
+        <ToggleButton
+            android:id="@+id/day5"
+            style="@style/AlarmDayToggle" />
+
+        <ToggleButton
+            android:id="@+id/day6"
+            style="@style/AlarmDayToggle" />
+
+    </LinearLayout>
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+</LinearLayout>

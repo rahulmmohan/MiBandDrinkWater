@@ -36,4 +36,5 @@ public class PreferenceHandler {
         SharedPreferences preferences = getPreference(context);
         return preferences.getString(AUTH_TOKEN, "");
     }
+
 }
