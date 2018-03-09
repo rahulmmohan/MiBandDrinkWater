@@ -15,14 +15,15 @@ abstract class AppDatabase: RoomDatabase() {
     abstract fun drinkStatsDao(): DrinkStatsDao
 
     companion object {
-        lateinit  var INSTANCE: AppDatabase
+        private val DATABASE = "DrinkWater"
+        private var INSTANCE: AppDatabase? = null
         fun getInstance(context: Context): AppDatabase {
             if (INSTANCE == null) {
-                INSTANCE = Room.inMemoryDatabaseBuilder(context.applicationContext, AppDatabase::class.java)
+                INSTANCE = Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, DATABASE)
                         .allowMainThreadQueries()
                         .build()
             }
-            return INSTANCE
+            return INSTANCE!!
         }
     }
 }

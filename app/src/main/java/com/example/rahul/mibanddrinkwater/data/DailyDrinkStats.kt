@@ -8,6 +8,7 @@ import java.util.*
  * Created by rahul on 22/11/17.
  */
 @Entity(tableName = "DailyDrinkStats")
-data class DailyDrinkStats(@ColumnInfo(name = "drink_target") val target:Int,
-                          @ColumnInfo(name = "drink_completion") val completion:Int,
-                          @ColumnInfo(name = "date")  val date: String)
+data class DailyDrinkStats(
+        @ColumnInfo(name = "drink_target") val target:Int,
+        @ColumnInfo(name = "drink_completion") val completion:Int,
+        @ColumnInfo(name = "date")  val date: String)

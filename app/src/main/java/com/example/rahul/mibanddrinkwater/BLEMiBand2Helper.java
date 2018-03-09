@@ -30,11 +30,11 @@ public class BLEMiBand2Helper {
     private boolean isConnectedToGatt = false; // the gatt connection
     private BluetoothGatt myGatBand = null;
 
-    public static BLEMiBand2Helper getInstance(Context context){
-       if(helper==null){
-           helper =new BLEMiBand2Helper(context);
-       }
-       return helper;
+    public static BLEMiBand2Helper getInstance(Context context) {
+        if (helper == null) {
+            helper = new BLEMiBand2Helper(context);
+        }
+        return helper;
     }
 
     private BLEMiBand2Helper(Context context) {
@@ -42,8 +42,8 @@ public class BLEMiBand2Helper {
         myHandler = new Handler();
     }
 
-    public  boolean isConnected() {
-        return  isConnectedToGatt;
+    public boolean isConnected() {
+        return isConnectedToGatt;
     }
 
     /* =========  Handling Initializing  ============== */
@@ -52,13 +52,13 @@ public class BLEMiBand2Helper {
                                     String filter) {
         Log.d(TAG, "(*) Initialising Bluetooth connection for device: " + filter);
 
-        if(myBluetoothAdapter.isEnabled()) {
+        if (myBluetoothAdapter.isEnabled()) {
             for (BluetoothDevice pairedDevice : myBluetoothAdapter.getBondedDevices()) {
                 if (pairedDevice.getName().contains(filter /*Like MI*/)) {
-                    Log.d(TAG, "\tDevice Name: " +  pairedDevice.getName());
+                    Log.d(TAG, "\tDevice Name: " + pairedDevice.getName());
                     Log.d(TAG, "\tDevice MAC: " + pairedDevice.getAddress());
 
-                    activeDevice =  pairedDevice;
+                    activeDevice = pairedDevice;
                     break;
                 }
             }
@@ -72,21 +72,17 @@ public class BLEMiBand2Helper {
             // GATT is Just another specification:
             // https://www.bluetooth.com/specifications/gatt/services
             Log.d(TAG, "(*) Establishing connection to gatt");
-            myGatBand = activeDevice.connectGatt(myContext, true ,myGattCallback );
-        }
-        else  {
+            myGatBand = activeDevice.connectGatt(myContext, true, myGattCallback);
+        } else {
             Log.d(TAG, "(*) Cant Establish connection to gatt, device is null");
         }
     }
 
-    public  void  DisconnectGatt()  {
-        if(myGatBand != null && isConnectedToGatt)
-        {
-            myHandler.post(new Runnable()
-            {
+    public void DisconnectGatt() {
+        if (myGatBand != null && isConnectedToGatt) {
+            myHandler.post(new Runnable() {
                 @Override
-                public void run()
-                {
+                public void run() {
                     myGatBand.disconnect();
                     myGatBand.close();
                     myGatBand = null;
@@ -96,23 +92,18 @@ public class BLEMiBand2Helper {
         }
     }
 
-    private BluetoothGattCallback myGattCallback = new BluetoothGattCallback()
-    {
+    private BluetoothGattCallback myGattCallback = new BluetoothGattCallback() {
         @Override
-        public void onServicesDiscovered(BluetoothGatt gatt, int status)
-        {
-            if(status == BluetoothGatt.GATT_SUCCESS)
-            {
+        public void onServicesDiscovered(BluetoothGatt gatt, int status) {
+            if (status == BluetoothGatt.GATT_SUCCESS) {
 
             }
             Log.d(TAG, "Service discovered with status " + status);
         }
 
         @Override
-        public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState)
-        {
-            switch(newState)
-            {
+        public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
+            switch (newState) {
                 case BluetoothProfile.STATE_CONNECTED:
                     Log.d(TAG, "Gatt state: connected");
                     gatt.discoverServices();
@@ -128,24 +119,23 @@ public class BLEMiBand2Helper {
         }
 
         @Override
-        public void onCharacteristicWrite(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status)
-        {
+        public void onCharacteristicWrite(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
             Log.d(TAG, "Write successful: " + Arrays.toString(characteristic.getValue()));
-            raiseonWrite(gatt,characteristic,status);
-            super.onCharacteristicWrite(gatt,characteristic,status);
+            raiseonWrite(gatt, characteristic, status);
+            super.onCharacteristicWrite(gatt, characteristic, status);
         }
 
         @Override
         public void onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
             Log.d(TAG, "Read successful: " + Arrays.toString(characteristic.getValue()));
-            raiseonRead(gatt,characteristic,status);
+            raiseonRead(gatt, characteristic, status);
             super.onCharacteristicRead(gatt, characteristic, status);
         }
 
         @Override
         public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
-            Log.d(TAG, " - Notifiaction UUID: " +  characteristic.getUuid().toString());
-            Log.d(TAG, " - Notifiaction value: " +  Arrays.toString(characteristic.getValue()));
+            Log.d(TAG, " - Notifiaction UUID: " + characteristic.getUuid().toString());
+            Log.d(TAG, " - Notifiaction value: " + Arrays.toString(characteristic.getValue()));
             raiseonNotification(gatt, characteristic);
             super.onCharacteristicChanged(gatt, characteristic);
         }
@@ -155,9 +145,13 @@ public class BLEMiBand2Helper {
 
     public interface BLEAction {
         void onDisconnect();
+
         void onConnect();
+
         void onRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status);
+
         void onWrite(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status);
+
         void onNotification(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic);
     }
 
@@ -176,19 +170,19 @@ public class BLEMiBand2Helper {
     public void raiseonNotification(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
         // Notify everybody that may be interested.
         for (BLEAction listener : listeners)
-            listener.onNotification( gatt,characteristic);
+            listener.onNotification(gatt, characteristic);
     }
 
     public void raiseonRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
         // Notify everybody that may be interested.
         for (BLEAction listener : listeners)
-            listener.onRead( gatt,characteristic,status);
+            listener.onRead(gatt, characteristic, status);
     }
 
     public void raiseonWrite(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
         // Notify everybody that may be interested.
         for (BLEAction listener : listeners)
-            listener.onWrite( gatt,characteristic,status);
+            listener.onWrite(gatt, characteristic, status);
     }
 
     public void raiseonDisconnect() {
@@ -223,7 +217,7 @@ public class BLEMiBand2Helper {
             if (myGatChar != null) {
                 Log.d(TAG, "* Reading data");
 
-                boolean status =  myGatBand.readCharacteristic(myGatChar);
+                boolean status = myGatBand.readCharacteristic(myGatChar);
                 Log.d(TAG, "* Read status :" + status);
             }
         }
@@ -247,11 +241,12 @@ public class BLEMiBand2Helper {
                 Log.d(TAG, "* Writing trigger");
                 myGatChar.setValue(data /*Consts.BYTE_NEW_HEART_RATE_SCAN*/);
 
-                boolean status =  myGatBand.writeCharacteristic(myGatChar);
+                boolean status = myGatBand.writeCharacteristic(myGatChar);
                 Log.d(TAG, "* Writting trigger status :" + status);
             }
         }
     }
+
     public boolean writeData(BluetoothGattCharacteristic Characteristics, byte[] data) {
         if (!isConnectedToGatt || myGatBand == null) {
             Log.d(TAG, "Cant read from BLE, not initialized.");
@@ -259,7 +254,7 @@ public class BLEMiBand2Helper {
         }
         Log.d(TAG, "* Writing trigger");
         Characteristics.setValue(data /*Consts.BYTE_NEW_HEART_RATE_SCAN*/);
-        boolean status =  myGatBand.writeCharacteristic(Characteristics);
+        boolean status = myGatBand.writeCharacteristic(Characteristics);
         Log.d(TAG, "* Writting trigger status :" + status);
         return status;
     }
@@ -282,7 +277,7 @@ public class BLEMiBand2Helper {
                 Log.d(TAG, "* Statring listening");
 
                 // second parametes is for starting\stopping the listener.
-                boolean status =  myGatBand.setCharacteristicNotification(myGatChar, true);
+                boolean status = myGatBand.setCharacteristicNotification(myGatChar, true);
                 Log.d(TAG, "* Set notification status :" + status);
             }
         }
@@ -290,7 +285,8 @@ public class BLEMiBand2Helper {
 
     /**
      * Get notification but also set descriptor to Enable notification. You need to wait couple of
-     *      seconds before you could use it (at least in the mi band 2)
+     * seconds before you could use it (at least in the mi band 2)
+     *
      * @param service
      * @param Characteristics
      */
@@ -351,9 +347,10 @@ public class BLEMiBand2Helper {
                     = myGatService.getCharacteristic(Characteristics/*Consts.UUID_BUTTON_TOUCH*/);
             return myGatChar;
         }
-       return null;
+        return null;
     }
-    public void wait(int millis){
+
+    public void wait(int millis) {
         try {
             Thread.sleep(millis);
         } catch (InterruptedException e) {
